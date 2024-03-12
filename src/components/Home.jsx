@@ -6,7 +6,7 @@ function Home(props) {
             <div className="first-page">
                 <h1 className="app-title">Quizzical</h1>
                 <p className="description">Some description if needed</p>
-                <button onClick={()=> props.handleStartQuiz()} className="start-btn">Start Quiz</button>
+                <button onClick={()=> props.setShowQuestions(true)} className="start-btn">Start Quiz</button>
             </div>
         </section>
     )

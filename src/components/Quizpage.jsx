@@ -1,30 +1,54 @@
+
+// decodes hmtl entities
 import he from "he"
 
-export default function Quizpage(props) {    
-   const mainPage = props.question.map((eachQuestion, index) => (
-                <div className="main-section" key={eachQuestion.id} id={eachQuestion.id}>
-                   
-                    <p className="question">{he.decode(eachQuestion.question)}</p>
-                    <ul className="answer-list">
-                        {eachQuestion.incorrect_answers.map((answer, index) => (
-                        <li key={index} id={`${index}`}  onClick={(e) => props.handleClick(e, eachQuestion.id, eachQuestion.correctAnswer)}>
-                            {/* <label>
-                                <input type="radio" name={`question_${index}`} value={answer} />
-                                {he.decode(answer)}
-                            </label> */}
-                            {he.decode(answer)}
-                        </li>
-                                ))}
-                    </ul>                
-                </div>
+function Quizpage(props) {   
+  function clickAnswer(currentQuestion, answer) {
+   
+    props.updateAnswer(currentQuestion, answer);
+  }
 
-   ))
-
+  // answers elements
+  const answersElements = props.answers.map((answer, index) => {
     return (
-        <main>
-         {mainPage}
-         <button className="check-answers" type="submit">Check answers</button>
-        </main>
-        
-    )
+      <button
+        key={index}
+        // update setQuestionsAndAnswers state
+        onClick={() => clickAnswer(props.question, answer)}
+        className={`answer-btn ${
+          // function highlights selected answer
+          answer === props.selectedAnswer ? "selected" : ""
+        }
+        ${
+          // checks if answer is correct
+          props.showResult && answer === props.correctAnswer ? "correct" : ""}
+        ${
+          // checks if answer is incorrect
+          props.showResult &&
+          answer === props.selectedAnswer &&
+          answer !== props.correctAnswer
+            ? "incorrect"
+            : ""
+        }
+        ${ // dims all answer elements
+          props.showResult && answer !== props.correctAnswer ? 
+          "dimmed" : ""
+        }
+        `}
+        // disables buttons when result is displayed
+        disabled={props.showResult}
+      >
+        {he.decode(answer)}
+      </button>
+    );
+  });
+
+  return (
+    <div className="question-container">
+      <h3 className="question">{he.decode(props.question)}</h3>
+      <div className="answers-btn-container">{answersElements}</div>
+    </div>
+  )
 }
+
+export default Quizpage
