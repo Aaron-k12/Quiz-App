@@ -45,8 +45,10 @@ function Quizpage(props) {
 
   return (
     <div className="question-container">
-      <h3 className="question">{he.decode(props.question)}</h3>
-      <div className="answers-btn-container">{answersElements}</div>
+      <div className="question-inner-wrapper">
+        <h3 className="question">{he.decode(props.question)}</h3>
+        <div className="answers-btn-container">{answersElements}</div>
+      </div>
     </div>
   )
 }

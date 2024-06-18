@@ -9,7 +9,7 @@ function App() {
 
     return(
         <main className="main-section">
-            {showQuestions ? (<Question />) :
+            {showQuestions ? (<Question setShowQuestions={setShowQuestions}/>) :
             <Home setShowQuestions={setShowQuestions} />}
         </main>
     )
